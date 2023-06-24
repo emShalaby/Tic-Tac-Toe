@@ -6,4 +6,9 @@ const GameBoard = function () {
   for (let i = 0; i < rows; i++) {
     board[i] = ["", "", ""];
   }
+
+  let players = [
+    { playerName: "player1", value: "x" },
+    { playerName: "player1", value: "x" },
+  ];
 };
