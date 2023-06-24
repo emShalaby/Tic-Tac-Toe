@@ -16,7 +16,7 @@ const GameBoard = (function () {
   let turnCount = 0;
 
   function updateBoard(cell) {
-    if (cell > 9 || cell<0) {
+    if (cell > 9 || cell < 0) {
       console.log(
         "please enter a valid number between 1 and 9 (including 1 and 9)"
       );
@@ -27,12 +27,12 @@ const GameBoard = (function () {
         return;
       }
 
-      board[0][cell-1] = activePlayer.value;
+      board[0][cell - 1] = activePlayer.value;
     } else if (cell <= 6) {
       if (board[1][cell - 4] != "") {
         return;
       }
-      board[1][cell-4] = activePlayer.value;
+      board[1][cell - 4] = activePlayer.value;
     } else {
       if (board[2][cell - 7] != "") return;
       board[2][cell - 7] = activePlayer.value;
@@ -40,6 +40,38 @@ const GameBoard = (function () {
     turnCount++;
     activePlayer = players[turnCount % 2];
     console.table(board);
+    _displayBoard();
+  }
+  function _displayBoard() {
+    document.querySelector(".board").remove();
+    const body = document.querySelector("body");
+    const boardDiv = document.createElement("div");
+    const colBorder1 = document.createElement("div");
+    const colBorder2 = document.createElement("div");
+    const rowBorder1 = document.createElement("div");
+    const rowBorder2 = document.createElement("div");
+
+    boardDiv.classList.add("board");
+    colBorder1.classList.add("col-border1");
+    colBorder2.classList.add("col-border2");
+    rowBorder1.classList.add("row-border1");
+    rowBorder2.classList.add("row-border2");
+
+    body.appendChild(boardDiv);
+    boardDiv.append(colBorder1);
+    boardDiv.append(colBorder2);
+    boardDiv.append(rowBorder1);
+    boardDiv.append(rowBorder2);
+
+    for (let i = 0; i < 9; i++) {
+      let cell = document.createElement("p");
+      cell.classList.add("cell");
+      boardDiv.appendChild(cell);
+    }
+    let cells = document.querySelectorAll(".cell");
+    for (let i = 0; i < 9; i++) {
+      cells[i].innerText = board.flat()[i];
+    }
   }
   return { updateBoard };
 })();
