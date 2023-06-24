@@ -1,4 +1,4 @@
-const GameBoard = function () {
+const GameBoard = (function () {
   const rows = 3;
   const columns = 3;
   const board = [];
@@ -37,7 +37,9 @@ const GameBoard = function () {
       if (board[2][cell - 7] != "") return;
       board[2][cell - 7] = activePlayer.val;
     }
+    turnCount++;
+    activePlayer = players[turnCount % 2];
   }
-  turnCount++;
-  activePlayer = players[turnCount % 2];
-};
+
+}
+)();
