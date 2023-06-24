@@ -1,10 +1,8 @@
 const GameBoard = function () {
-  const rows = 3;
-  const columns = 3;
   const board = [];
 
-  for (let i = 0; i < rows; i++) {
-    board[i] = ["", "", ""];
+  for (let i = 0; i < 9; i++) {
+    board[i] = "";
   }
 
   let players = [
@@ -22,21 +20,8 @@ const GameBoard = function () {
       );
       return;
     }
-    if (cell <= 3) {
-      if (board[0][cell - 1] != "") {
-        return;
-      }
-
-      board[0][cell - 1] = activePlayer.value;
-    } else if (cell <= 6) {
-      if (board[1][cell - 4] != "") {
-        return;
-      }
-      board[1][cell - 4] = activePlayer.value;
-    } else {
-      if (board[2][cell - 7] != "") return;
-      board[2][cell - 7] = activePlayer.value;
-    }
+    if (board[cell - 1] != "") return;
+    board[cell - 1] = activePlayer.value;
     turnCount++;
     activePlayer = players[turnCount % 2];
     console.table(board);
@@ -86,7 +71,6 @@ const Origin = function () {
     let game = GameBoard();
     newGameBtn.remove();
     this.game = game;
-    
   });
 };
 Origin();
