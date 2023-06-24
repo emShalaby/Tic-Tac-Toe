@@ -3,8 +3,7 @@ const GameBoard = function () {
   const columns = 3;
   const board = [];
 
-  const players = {
-    player1: "x",
-    player2: "o",
-  };
+  for (let i = 0; i < rows; i++) {
+    board[i] = ["", "", ""];
+  }
 };
