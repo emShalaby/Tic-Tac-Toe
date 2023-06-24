@@ -13,7 +13,8 @@ const GameBoard = function () {
   ];
 
   let activePlayer = players[0];
-  
+  let turnCount = 0;
+
   function updateBoard(cell) {
     if (cell > 9) {
       console.log(
@@ -37,4 +38,6 @@ const GameBoard = function () {
       board[2][cell - 7] = activePlayer.val;
     }
   }
+  turnCount++;
+  activePlayer = players[turnCount % 2];
 };
