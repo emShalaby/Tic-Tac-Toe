@@ -80,4 +80,11 @@ const GameBoard = function () {
   return { updateBoard };
 };
 
-
+const Origin = function () {
+  const newGameBtn = document.querySelector(".new-game");
+  newGameBtn.addEventListener("click", () => {
+    let game = GameBoard();
+    newGameBtn.remove();
+  });
+};
+Origin();
