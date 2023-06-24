@@ -1,4 +1,4 @@
-const GameBoard = (function () {
+const GameBoard = function () {
   const rows = 3;
   const columns = 3;
   const board = [];
@@ -43,7 +43,10 @@ const GameBoard = (function () {
     _displayBoard();
   }
   function _displayBoard() {
-    document.querySelector(".board").remove();
+    if (document.querySelector(".board")) {
+      document.querySelector(".board").remove();
+    }
+
     const body = document.querySelector("body");
     const boardDiv = document.createElement("div");
     const colBorder1 = document.createElement("div");
@@ -73,5 +76,8 @@ const GameBoard = (function () {
       cells[i].innerText = board.flat()[i];
     }
   }
+  _displayBoard();
   return { updateBoard };
-})();
+};
+
+
