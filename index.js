@@ -13,4 +13,28 @@ const GameBoard = function () {
   ];
 
   let activePlayer = players[0];
+  
+  function updateBoard(cell) {
+    if (cell > 9) {
+      console.log(
+        "please enter a valid number between 1 and 9 (including 1 and 9)"
+      );
+      return;
+    }
+    if (cell <= 3) {
+      if (board[0][cell - 1] != "") {
+        return;
+      }
+
+      board[0][cell] = activePlayer.value;
+    } else if (cell <= 6) {
+      if (board[0][cell - 4] != "") {
+        return;
+      }
+      board[1][cell] = activePlayer.value;
+    } else {
+      if (board[2][cell - 7] != "") return;
+      board[2][cell - 7] = activePlayer.val;
+    }
+  }
 };
