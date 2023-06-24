@@ -85,6 +85,8 @@ const Origin = function () {
   newGameBtn.addEventListener("click", () => {
     let game = GameBoard();
     newGameBtn.remove();
+    this.game = game;
+    
   });
 };
 Origin();
