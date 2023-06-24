@@ -11,4 +11,6 @@ const GameBoard = function () {
     { playerName: "player1", value: "x" },
     { playerName: "player1", value: "x" },
   ];
+
+  let activePlayer = players[0];
 };
