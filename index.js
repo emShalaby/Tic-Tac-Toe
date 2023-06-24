@@ -22,6 +22,7 @@ const GameBoard = function () {
     }
     if (board[cell - 1] != "") return;
     board[cell - 1] = activePlayer.value;
+    _checkResult();
     turnCount++;
     activePlayer = players[turnCount % 2];
     console.table(board);
@@ -59,6 +60,42 @@ const GameBoard = function () {
     let cells = document.querySelectorAll(".cell");
     for (let i = 0; i < 9; i++) {
       cells[i].innerText = board.flat()[i];
+    }
+  }
+  function _checkResult() {
+    if (board[0] == board[4] && board[0] == board[8] && board[0] != "") {
+      console.log(activePlayer);
+      return activePlayer;
+    }
+    if (board[2] == board[4] && board[2] == board[6] && board[2] != "") {
+      console.log(activePlayer);
+      return activePlayer;
+    }
+
+    for (let i = 0; i < 9; i = i + 3) {
+      if (
+        board[i] == board[i + 1] &&
+        board[i] == board[i + 2] &&
+        board[i] != ""
+      ) {
+        console.log(activePlayer);
+        return activePlayer;
+      }
+    }
+    for (let i = 0; i < 3; i++) {
+      if (
+        board[i] == board[i + 3] &&
+        board[i] == board[i + 6] &&
+        board[i] != ""
+      ) {
+        console.log(activePlayer);
+        return activePlayer;
+      }
+    }
+    for (let i = 0; i < 9; i++) {
+      if (board[i] == "") return false;
+      console.log(players);
+      return players;
     }
   }
   _displayBoard();
