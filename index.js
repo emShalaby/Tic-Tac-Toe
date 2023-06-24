@@ -53,13 +53,12 @@ const GameBoard = function () {
     boardDiv.append(rowBorder2);
 
     for (let i = 0; i < 9; i++) {
-      let cell = document.createElement("p");
+      let cell = document.createElement("div");
+      let value = document.createElement("p");
+      cell.appendChild(value);
       cell.classList.add("cell");
       boardDiv.appendChild(cell);
-    }
-    let cells = document.querySelectorAll(".cell");
-    for (let i = 0; i < 9; i++) {
-      cells[i].innerText = board.flat()[i];
+      value.innerText = board[i];
     }
   }
   function _checkResult() {
