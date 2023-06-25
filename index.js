@@ -104,6 +104,16 @@ const GameBoard = function () {
       return players;
     }
   }
+  function _displayResult(winner) {
+    const modal = document.querySelector("#modal");
+    const msg = document.createElement("p");
+    modal.showModal();
+    if (winner.length) {
+      msg.innerText = "TIE !";
+      return;
+    }
+    else msg.innerText=winner.name +' WINS !'
+  }
   _displayBoard();
   return { updateBoard };
 };
