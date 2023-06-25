@@ -128,7 +128,15 @@ const GameBoard = function (player1obj, player2obj) {
       }
     }
   }
+  function _unbeatable() {
+    if (activePlayer.playerName != "unbeatable") return;
+    const avalSpots = [];
+    for (let i = 0; i < board.length; i++) {
+      if (board[i] == "") avalSpots.push(i);
+    }
+  }
   _displayBoard();
+
   return { updateBoard };
 };
 
