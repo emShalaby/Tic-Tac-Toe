@@ -140,10 +140,14 @@ const Origin = function () {
   const body = document.querySelector("body");
   const closeModalBtn = document.querySelector("#close");
   const modal = document.querySelector("#modal");
+  const unbeatableBtn = document.createElement("button");
+  
   vsCpuBtn.innerText = "VS CPU";
   newGameBtn.innerText = "NEW GAME";
+  unbeatableBtn.innerHTML = "UNBEATABLE MODE";
   body.appendChild(newGameBtn);
   body.appendChild(vsCpuBtn);
+  body.appendChild(unbeatableBtn);
 
   newGameBtn.addEventListener("click", () => {
     GameBoard(
@@ -152,6 +156,7 @@ const Origin = function () {
     );
     newGameBtn.remove();
     vsCpuBtn.remove();
+
   });
   closeModalBtn.addEventListener(
     "click",
@@ -169,5 +174,6 @@ const Origin = function () {
     newGameBtn.remove();
     vsCpuBtn.remove();
   });
+  
 };
 Origin();
