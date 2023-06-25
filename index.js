@@ -196,7 +196,7 @@ const Origin = function () {
     document.querySelector(".board").remove();
   const newGameBtn = document.createElement("button");
   const vsCpuBtn = document.createElement("button");
-  const body = document.querySelector("body");
+  const boardContainer = document.querySelector(".board-container");
   const closeModalBtn = document.querySelector("#close");
   const modal = document.querySelector("#modal");
   const unbeatableBtn = document.createElement("button");
@@ -209,7 +209,7 @@ const Origin = function () {
   buttonContainer.appendChild(newGameBtn);
   buttonContainer.appendChild(vsCpuBtn);
   buttonContainer.appendChild(unbeatableBtn);
-  body.appendChild(buttonContainer);
+  boardContainer.appendChild(buttonContainer);
 
   newGameBtn.addEventListener("click", () => {
     GameBoard(
