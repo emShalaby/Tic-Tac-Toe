@@ -107,7 +107,7 @@ const GameBoard = function (player1obj, player2obj) {
     for (let i = 0; i < 9; i++) {
       if (someBoard[i] == "") return false;
     }
-    return { value: "tie" };
+    return { playerName: "emShalaby", value: "tie" };
   }
   function _displayResult(winner) {
     if (winner === false) return false;
