@@ -19,12 +19,13 @@ const GameBoard = function (player1obj, player2obj) {
     }
     if (board[cell] != "") return;
     board[cell] = activePlayer.value;
-    _displayResult(_checkResult(board,activePlayer));
+    _displayResult(_checkResult(board, activePlayer));
     turnCount++;
     activePlayer = players[turnCount % 2];
     console.table(board);
     _displayBoard();
     _easyCPU();
+    _unbeatable(board, activePlayer);
   }
   function _displayBoard() {
     if (document.querySelector(".board")) {
@@ -66,7 +67,7 @@ const GameBoard = function (player1obj, player2obj) {
       );
     }
   }
-  function _checkResult(board,player) {
+  function _checkResult(board, player) {
     if (board[0] == board[4] && board[0] == board[8] && board[0] != "") {
       console.log(player);
       return player;
@@ -158,7 +159,24 @@ const GameBoard = function (player1obj, player2obj) {
       moves.push(move);
     }
     let bestMove = 0;
-    if(player.playerName)
+    if (player.playerName === "unbeatable") {
+      let bestScore = -1000;
+      for (let i = 0; i < moves.length; i++) {
+        if (moves[i].score > bestScore) {
+          bestScore = moves[i].score;
+          bestMove = i;
+        }
+      }
+    } else {
+      let bestScore = 1000;
+      for (let i = 0; i < moves.length; i++) {
+        if (moves[i].score < bestScore) {
+          bestScore = moves[i].score;
+          bestMove = i;
+        }
+      }
+    }
+    updateBoard(moves[bestMove].index);
   }
   _displayBoard();
 
