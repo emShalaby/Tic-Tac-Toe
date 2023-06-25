@@ -11,14 +11,16 @@ const GameBoard = function (player1obj, player2obj) {
   let turnCount = 0;
 
   function updateBoard(cell) {
-
     if (board[cell] != "") return;
     board[cell] = activePlayer.value;
     _displayResult(_checkResult(board, activePlayer));
+    if (_checkResult(board, activePlayer)) return;
     turnCount++;
     activePlayer = players[turnCount % 2];
     _displayBoard();
-    _easyCPU();
+    if (activePlayer.playerName == "CPU") {
+      _easyCPU();
+    }
     if (activePlayer.playerName == "unbeatable") {
       updateBoard(_unbeatable(board, activePlayer));
     }
@@ -87,7 +89,7 @@ const GameBoard = function (player1obj, player2obj) {
     return "tie";
   }
   function _displayResult(winner) {
-    if (winner === false) return;
+    if (winner === false) return false;
 
     const modal = document.querySelector("#modal");
     if (modal.firstChild) modal.firstChild.remove();
@@ -95,7 +97,7 @@ const GameBoard = function (player1obj, player2obj) {
     modal.prepend(msg);
     modal.close();
     modal.showModal();
-    if (winner.length) {
+    if (winner == "tie") {
       msg.innerText = "TIE !";
       return;
     } else msg.innerText = winner.playerName + " WINS !";
