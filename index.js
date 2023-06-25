@@ -25,7 +25,6 @@ const GameBoard = function (player1obj, player2obj) {
     console.table(board);
     _displayBoard();
     _easyCPU();
-    _displayBoard();
   }
   function _displayBoard() {
     if (document.querySelector(".board")) {
@@ -119,6 +118,7 @@ const GameBoard = function (player1obj, player2obj) {
     } else msg.innerText = winner.playerName + " WINS !";
   }
   function _easyCPU() {
+    if (!board.includes("")) return;
     if (activePlayer.playerName != "CPU") return;
     while (true) {
       let i = Math.round(8 * Math.random());
