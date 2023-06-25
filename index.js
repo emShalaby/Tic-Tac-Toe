@@ -114,9 +114,8 @@ const Origin = function () {
   const modal = document.querySelector("#modal");
 
   newGameBtn.addEventListener("click", () => {
-    let game = GameBoard();
+    GameBoard();
     newGameBtn.remove();
-    this.game = game;
   });
   closeModalBtn.addEventListener(
     "click",
