@@ -22,7 +22,7 @@ const GameBoard = function () {
     }
     if (board[cell] != "") return;
     board[cell] = activePlayer.value;
-    _checkResult();
+    _displayResult(_checkResult());
     turnCount++;
     activePlayer = players[turnCount % 2];
     console.table(board);
@@ -100,19 +100,21 @@ const GameBoard = function () {
     }
     for (let i = 0; i < 9; i++) {
       if (board[i] == "") return false;
-      console.log(players);
-      return players;
     }
+    console.log(players);
+    return players;
   }
   function _displayResult(winner) {
+    console.log(winner.playerName);
+    if (winner === false) return;
     const modal = document.querySelector("#modal");
     const msg = document.createElement("p");
+    modal.appendChild(msg);
     modal.showModal();
     if (winner.length) {
       msg.innerText = "TIE !";
       return;
-    }
-    else msg.innerText=winner.name +' WINS !'
+    } else msg.innerText = winner.playerName + " WINS !";
   }
   _displayBoard();
   return { updateBoard };
