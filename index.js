@@ -14,14 +14,14 @@ const GameBoard = function () {
   let turnCount = 0;
 
   function updateBoard(cell) {
-    if (cell > 9 || cell < 0) {
+    if (cell > 8 || cell < 0) {
       console.log(
         "please enter a valid number between 1 and 9 (including 1 and 9)"
       );
       return;
     }
-    if (board[cell - 1] != "") return;
-    board[cell - 1] = activePlayer.value;
+    if (board[cell ] != "") return;
+    board[cell] = activePlayer.value;
     _checkResult();
     turnCount++;
     activePlayer = players[turnCount % 2];
