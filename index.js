@@ -20,7 +20,7 @@ const GameBoard = function () {
       );
       return;
     }
-    if (board[cell ] != "") return;
+    if (board[cell] != "") return;
     board[cell] = activePlayer.value;
     _checkResult();
     turnCount++;
@@ -59,6 +59,9 @@ const GameBoard = function () {
       cell.classList.add("cell");
       boardDiv.appendChild(cell);
       value.innerText = board[i];
+      cell.addEventListener("click", () => {
+        updateBoard(i);
+      });
     }
   }
   function _checkResult() {
