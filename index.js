@@ -59,9 +59,13 @@ const GameBoard = function () {
       cell.classList.add("cell");
       boardDiv.appendChild(cell);
       value.innerText = board[i];
-      cell.addEventListener("click", () => {
-        updateBoard(i);
-      });
+      cell.addEventListener(
+        "click",
+        () => {
+          updateBoard(i);
+        },
+        { once: true }
+      );
     }
   }
   function _checkResult() {
