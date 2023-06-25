@@ -141,22 +141,23 @@ const Origin = function () {
   const closeModalBtn = document.querySelector("#close");
   const modal = document.querySelector("#modal");
   const unbeatableBtn = document.createElement("button");
-  
+  const buttonContainer = document.createElement("div");
+
   vsCpuBtn.innerText = "VS CPU";
   newGameBtn.innerText = "NEW GAME";
   unbeatableBtn.innerHTML = "UNBEATABLE MODE";
-  body.appendChild(newGameBtn);
-  body.appendChild(vsCpuBtn);
-  body.appendChild(unbeatableBtn);
+  buttonContainer.classList.add("button-container");
+  buttonContainer.appendChild(newGameBtn);
+  buttonContainer.appendChild(vsCpuBtn);
+  buttonContainer.appendChild(unbeatableBtn);
+  body.appendChild(buttonContainer);
 
   newGameBtn.addEventListener("click", () => {
     GameBoard(
       { playerName: "player1", value: "x" },
       { playerName: "player2", value: "o" }
     );
-    newGameBtn.remove();
-    vsCpuBtn.remove();
-
+    buttonContainer.remove();
   });
   closeModalBtn.addEventListener(
     "click",
@@ -171,9 +172,7 @@ const Origin = function () {
       { playerName: "player1", value: "x" },
       { playerName: "CPU", value: "o" }
     );
-    newGameBtn.remove();
-    vsCpuBtn.remove();
+    buttonContainer.remove();
   });
-  
 };
 Origin();
