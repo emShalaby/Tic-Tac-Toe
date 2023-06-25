@@ -13,11 +13,11 @@ const GameBoard = function (player1obj, player2obj) {
   function updateBoard(cell) {
     if (board[cell] != "") return;
     board[cell] = activePlayer.value;
+    _displayBoard();
     _displayResult(_checkResult(board, activePlayer));
     if (_checkResult(board, activePlayer)) return;
     turnCount++;
     activePlayer = players[turnCount % 2];
-    _displayBoard();
     if (activePlayer.playerName == "CPU") {
       _easyCPU();
     }
@@ -123,7 +123,7 @@ const GameBoard = function (player1obj, player2obj) {
     for (let i = 0; i < newBoard.length; i++) {
       if (newBoard[i] == "") avalSpots.push(i);
     }
-    if (_checkResult(newBoard, player)) {
+    if (_checkResult(newBoard, player) != false) {
       if (_checkResult(newBoard, player) === "tie") return { score: 0 };
       else if (_checkResult(newBoard, player).playerName == "unbeatable")
         return { score: 10 };
