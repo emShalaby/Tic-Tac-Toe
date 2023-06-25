@@ -24,6 +24,8 @@ const GameBoard = function (player1obj, player2obj) {
     activePlayer = players[turnCount % 2];
     console.table(board);
     _displayBoard();
+    _easyCPU();
+    _displayBoard();
   }
   function _displayBoard() {
     if (document.querySelector(".board")) {
@@ -109,6 +111,7 @@ const GameBoard = function (player1obj, player2obj) {
     if (modal.firstChild) modal.firstChild.remove();
     const msg = document.createElement("p");
     modal.prepend(msg);
+    modal.close();
     modal.showModal();
     if (winner.length) {
       msg.innerText = "TIE !";
@@ -119,8 +122,10 @@ const GameBoard = function (player1obj, player2obj) {
     if (activePlayer.playerName != "CPU") return;
     while (true) {
       let i = Math.round(8 * Math.random());
-      if (board[i] == "") updateBoard(i);
-      break;
+      if (board[i] == "") {
+        updateBoard(i);
+        break;
+      }
     }
   }
   _displayBoard();
@@ -131,12 +136,14 @@ const Origin = function () {
   if (document.querySelector(".board"))
     document.querySelector(".board").remove();
   const newGameBtn = document.createElement("button");
+  const vsCpuBtn = document.createElement("button");
   const body = document.querySelector("body");
   const closeModalBtn = document.querySelector("#close");
   const modal = document.querySelector("#modal");
-  newGameBtn.id = "close";
+  vsCpuBtn.innerText = "VS CPU";
   newGameBtn.innerText = "NEW GAME";
   body.appendChild(newGameBtn);
+  body.appendChild(vsCpuBtn);
 
   newGameBtn.addEventListener("click", () => {
     GameBoard(
@@ -144,6 +151,7 @@ const Origin = function () {
       { playerName: "player2", value: "o" }
     );
     newGameBtn.remove();
+    vsCpuBtn.remove();
   });
   closeModalBtn.addEventListener(
     "click",
@@ -153,5 +161,13 @@ const Origin = function () {
     },
     { once: true }
   );
+  vsCpuBtn.addEventListener("click", () => {
+    GameBoard(
+      { playerName: "player1", value: "x" },
+      { playerName: "CPU", value: "o" }
+    );
+    newGameBtn.remove();
+    vsCpuBtn.remove();
+  });
 };
 Origin();
