@@ -11,21 +11,17 @@ const GameBoard = function (player1obj, player2obj) {
   let turnCount = 0;
 
   function updateBoard(cell) {
-    if (cell > 8 || cell < 0) {
-      console.log(
-        "please enter a valid number between 1 and 9 (including 1 and 9)"
-      );
-      return;
-    }
+
     if (board[cell] != "") return;
     board[cell] = activePlayer.value;
     _displayResult(_checkResult(board, activePlayer));
     turnCount++;
     activePlayer = players[turnCount % 2];
-    console.table(board);
     _displayBoard();
     _easyCPU();
-    _unbeatable(board, activePlayer);
+    if (activePlayer.playerName == "unbeatable") {
+      updateBoard(_unbeatable(board, activePlayer));
+    }
   }
   function _displayBoard() {
     if (document.querySelector(".board")) {
@@ -67,44 +63,30 @@ const GameBoard = function (player1obj, player2obj) {
       );
     }
   }
-  function _checkResult(board, player) {
-    if (board[0] == board[4] && board[0] == board[8] && board[0] != "") {
-      console.log(player);
+  function _checkResult(arr, player) {
+    if (arr[0] == arr[4] && arr[0] == arr[8] && arr[0] != "") {
       return player;
     }
-    if (board[2] == board[4] && board[2] == board[6] && board[2] != "") {
-      console.log(player);
+    if (arr[2] == arr[4] && arr[2] == arr[6] && arr[2] != "") {
       return player;
     }
 
     for (let i = 0; i < 9; i = i + 3) {
-      if (
-        board[i] == board[i + 1] &&
-        board[i] == board[i + 2] &&
-        board[i] != ""
-      ) {
-        console.log(player);
+      if (arr[i] == arr[i + 1] && arr[i] == arr[i + 2] && arr[i] != "") {
         return player;
       }
     }
     for (let i = 0; i < 3; i++) {
-      if (
-        board[i] == board[i + 3] &&
-        board[i] == board[i + 6] &&
-        board[i] != ""
-      ) {
-        console.log(player);
+      if (arr[i] == arr[i + 3] && arr[i] == arr[i + 6] && arr[i] != "") {
         return player;
       }
     }
     for (let i = 0; i < 9; i++) {
-      if (board[i] == "") return false;
+      if (arr[i] == "") return false;
     }
-    console.log(players);
-    return players;
+    return "tie";
   }
   function _displayResult(winner) {
-    console.log(winner.playerName);
     if (winner === false) return;
 
     const modal = document.querySelector("#modal");
@@ -136,30 +118,30 @@ const GameBoard = function (player1obj, player2obj) {
     )
       return;
     const avalSpots = [];
-    for (let i = 0; i < board.length; i++) {
-      if (board[i] == "") avalSpots.push(i);
+    for (let i = 0; i < newBoard.length; i++) {
+      if (newBoard[i] == "") avalSpots.push(i);
     }
-
-    if (_checkResult(newBoard).length > 1) return { score: 0 };
-    else if (_checkResult(newBoard).playerName == "unbeatable")
-      return { score: 10 };
-    else if (_checkResult(newBoard).playerName != "unbeatable")
-      return { score: -10 };
+    if (_checkResult(newBoard, player)) {
+      if (_checkResult(newBoard, player) === "tie") return { score: 0 };
+      else if (_checkResult(newBoard, player).playerName == "unbeatable")
+        return { score: 10 };
+      else return { score: -10 };
+    }
     let moves = [];
     for (let i = 0; i < avalSpots.length; i++) {
       let move = {};
-      move.index = newBoard[avalSpots[i]];
+      move.index = avalSpots[i];
       newBoard[avalSpots[i]] = player.value;
       if (player == players[0]) {
-        move.score = _unbeatable(newBoard, players[1]);
+        move.score = _unbeatable(newBoard, players[1]).score;
       } else {
-        move.score = _unbeatable(newBoard, players[0]);
+        move.score = _unbeatable(newBoard, players[0]).score;
       }
       newBoard[avalSpots[i]] = "";
       moves.push(move);
     }
     let bestMove = 0;
-    if (player.playerName === "unbeatable") {
+    if (player.playerName == "unbeatable") {
       let bestScore = -1000;
       for (let i = 0; i < moves.length; i++) {
         if (moves[i].score > bestScore) {
@@ -176,7 +158,8 @@ const GameBoard = function (player1obj, player2obj) {
         }
       }
     }
-    updateBoard(moves[bestMove].index);
+    console.log(moves[bestMove].index);
+    return moves[bestMove].index;
   }
   _displayBoard();
 
