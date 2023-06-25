@@ -107,7 +107,9 @@ const GameBoard = function () {
   function _displayResult(winner) {
     console.log(winner.playerName);
     if (winner === false) return;
+
     const modal = document.querySelector("#modal");
+    if (modal.firstChild) modal.firstChild.remove();
     const msg = document.createElement("p");
     modal.prepend(msg);
     modal.showModal();
@@ -128,7 +130,7 @@ const Origin = function () {
   const closeModalBtn = document.querySelector("#close");
   const modal = document.querySelector("#modal");
   newGameBtn.id = "close";
-  newGameBtn.innerText='NEW GAME'
+  newGameBtn.innerText = "NEW GAME";
   body.appendChild(newGameBtn);
 
   newGameBtn.addEventListener("click", () => {
