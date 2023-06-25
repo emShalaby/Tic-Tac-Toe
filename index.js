@@ -19,7 +19,7 @@ const GameBoard = function (player1obj, player2obj) {
     }
     if (board[cell] != "") return;
     board[cell] = activePlayer.value;
-    _displayResult(_checkResult());
+    _displayResult(_checkResult(board));
     turnCount++;
     activePlayer = players[turnCount % 2];
     console.table(board);
@@ -66,7 +66,7 @@ const GameBoard = function (player1obj, player2obj) {
       );
     }
   }
-  function _checkResult() {
+  function _checkResult(board) {
     if (board[0] == board[4] && board[0] == board[8] && board[0] != "") {
       console.log(activePlayer);
       return activePlayer;
@@ -128,12 +128,17 @@ const GameBoard = function (player1obj, player2obj) {
       }
     }
   }
-  function _unbeatable() {
-    if (activePlayer.playerName != "unbeatable") return;
+  function _unbeatable(newBoard,player) {
     const avalSpots = [];
     for (let i = 0; i < board.length; i++) {
       if (board[i] == "") avalSpots.push(i);
     }
+
+    if (_checkResult(newBoard).length > 1) return { score: 0 };
+    else if (_checkResult(newBoard).playerName == "unbeatable") return { score: 10 };
+    else if (_checkResult(newBoard).playerName != "unbeatable") return { score: -10 };
+    let moves = [];
+    
   }
   _displayBoard();
 
