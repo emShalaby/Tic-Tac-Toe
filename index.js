@@ -19,7 +19,7 @@ const GameBoard = function (player1obj, player2obj) {
     }
     if (board[cell] != "") return;
     board[cell] = activePlayer.value;
-    _displayResult(_checkResult(board));
+    _displayResult(_checkResult(board,activePlayer));
     turnCount++;
     activePlayer = players[turnCount % 2];
     console.table(board);
@@ -66,14 +66,14 @@ const GameBoard = function (player1obj, player2obj) {
       );
     }
   }
-  function _checkResult(board) {
+  function _checkResult(board,player) {
     if (board[0] == board[4] && board[0] == board[8] && board[0] != "") {
-      console.log(activePlayer);
-      return activePlayer;
+      console.log(player);
+      return player;
     }
     if (board[2] == board[4] && board[2] == board[6] && board[2] != "") {
-      console.log(activePlayer);
-      return activePlayer;
+      console.log(player);
+      return player;
     }
 
     for (let i = 0; i < 9; i = i + 3) {
@@ -82,8 +82,8 @@ const GameBoard = function (player1obj, player2obj) {
         board[i] == board[i + 2] &&
         board[i] != ""
       ) {
-        console.log(activePlayer);
-        return activePlayer;
+        console.log(player);
+        return player;
       }
     }
     for (let i = 0; i < 3; i++) {
@@ -92,8 +92,8 @@ const GameBoard = function (player1obj, player2obj) {
         board[i] == board[i + 6] &&
         board[i] != ""
       ) {
-        console.log(activePlayer);
-        return activePlayer;
+        console.log(player);
+        return player;
       }
     }
     for (let i = 0; i < 9; i++) {
@@ -128,17 +128,37 @@ const GameBoard = function (player1obj, player2obj) {
       }
     }
   }
-  function _unbeatable(newBoard,player) {
+  function _unbeatable(newBoard, player) {
+    if (
+      !Object.values(players[0]).includes("unbeatable") &&
+      !Object.values(players[1]).includes("unbeatable")
+    )
+      return;
     const avalSpots = [];
     for (let i = 0; i < board.length; i++) {
       if (board[i] == "") avalSpots.push(i);
     }
 
     if (_checkResult(newBoard).length > 1) return { score: 0 };
-    else if (_checkResult(newBoard).playerName == "unbeatable") return { score: 10 };
-    else if (_checkResult(newBoard).playerName != "unbeatable") return { score: -10 };
+    else if (_checkResult(newBoard).playerName == "unbeatable")
+      return { score: 10 };
+    else if (_checkResult(newBoard).playerName != "unbeatable")
+      return { score: -10 };
     let moves = [];
-    
+    for (let i = 0; i < avalSpots.length; i++) {
+      let move = {};
+      move.index = newBoard[avalSpots[i]];
+      newBoard[avalSpots[i]] = player.value;
+      if (player == players[0]) {
+        move.score = _unbeatable(newBoard, players[1]);
+      } else {
+        move.score = _unbeatable(newBoard, players[0]);
+      }
+      newBoard[avalSpots[i]] = "";
+      moves.push(move);
+    }
+    let bestMove = 0;
+    if(player.playerName)
   }
   _displayBoard();
 
