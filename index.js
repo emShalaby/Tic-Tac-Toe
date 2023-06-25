@@ -115,6 +115,14 @@ const GameBoard = function (player1obj, player2obj) {
       return;
     } else msg.innerText = winner.playerName + " WINS !";
   }
+  function _easyCPU() {
+    if (activePlayer.playerName != "CPU") return;
+    while (true) {
+      let i = Math.round(8 * Math.random());
+      if (board[i] == "") updateBoard(i);
+      break;
+    }
+  }
   _displayBoard();
   return { updateBoard };
 };
