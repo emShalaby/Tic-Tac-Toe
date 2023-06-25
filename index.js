@@ -121,9 +121,15 @@ const GameBoard = function () {
 };
 
 const Origin = function () {
-  const newGameBtn = document.querySelector(".new-game");
+  if (document.querySelector(".board"))
+    document.querySelector(".board").remove();
+  const newGameBtn = document.createElement("button");
+  const body = document.querySelector("body");
   const closeModalBtn = document.querySelector("#close");
   const modal = document.querySelector("#modal");
+  newGameBtn.id = "close";
+  newGameBtn.innerText='NEW GAME'
+  body.appendChild(newGameBtn);
 
   newGameBtn.addEventListener("click", () => {
     GameBoard();
