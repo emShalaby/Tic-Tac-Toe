@@ -201,6 +201,13 @@ const Origin = function () {
   const modal = document.querySelector("#modal");
   const unbeatableBtn = document.createElement("button");
   const buttonContainer = document.createElement("div");
+  const cardsContainer = document.querySelector(".cards-container");
+  cardsContainer.style.display = "flex";
+  function _collectNames() {
+    const name1 = document.querySelector("#player1-name").value;
+    const name2 = document.querySelector("#player2-name").value;
+    return [name1, name2];
+  }
 
   vsCpuBtn.innerText = "VS CPU";
   newGameBtn.innerText = "NEW GAME";
@@ -212,9 +219,11 @@ const Origin = function () {
   boardContainer.appendChild(buttonContainer);
 
   newGameBtn.addEventListener("click", () => {
+    let names = _collectNames();
+    cardsContainer.style.display = "none";
     GameBoard(
-      { playerName: "player1", value: "x" },
-      { playerName: "player2", value: "o" }
+      { playerName: names[0], value: "x" },
+      { playerName: names[1], value: "o" }
     );
     buttonContainer.remove();
   });
