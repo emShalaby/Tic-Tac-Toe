@@ -14,15 +14,15 @@ const GameBoard = function (player1obj, player2obj) {
     if (board[cell] != "") return;
     board[cell] = activePlayer.value;
     _displayBoard();
-    _displayResult(_checkResult(board, activePlayer));
-    if (_checkResult(board, activePlayer)) return;
+    _displayResult(_checkResult(board));
+    if (_checkResult(board)) return activePlayer;
     turnCount++;
     activePlayer = players[turnCount % 2];
     if (activePlayer.playerName == "CPU") {
       _easyCPU();
     }
     if (activePlayer.playerName == "unbeatable") {
-      updateBoard(_unbeatable(board, activePlayer));
+      updateBoard(_unbeatable(board));
     }
   }
   function _displayBoard() {
@@ -65,26 +65,46 @@ const GameBoard = function (player1obj, player2obj) {
       );
     }
   }
-  function _checkResult(arr, player) {
-    if (arr[0] == arr[4] && arr[0] == arr[8] && arr[0] != "") {
-      return player;
+  function _checkResult(someBoard) {
+    if (
+      someBoard[0] == someBoard[4] &&
+      someBoard[0] == someBoard[8] &&
+      someBoard[0] != ""
+    ) {
+      if (someBoard[0] == "x") return player1obj;
+      else return player2obj;
     }
-    if (arr[2] == arr[4] && arr[2] == arr[6] && arr[2] != "") {
-      return player;
+    if (
+      someBoard[2] == someBoard[4] &&
+      someBoard[2] == someBoard[6] &&
+      someBoard[2] != ""
+    ) {
+      if (someBoard[2] == "x") return player1obj;
+      else return player2obj;
     }
 
     for (let i = 0; i < 9; i = i + 3) {
-      if (arr[i] == arr[i + 1] && arr[i] == arr[i + 2] && arr[i] != "") {
-        return player;
+      if (
+        someBoard[i] == someBoard[i + 1] &&
+        someBoard[i] == someBoard[i + 2] &&
+        someBoard[i] != ""
+      ) {
+        if (someBoard[i] == "x") return player1obj;
+        else return player2obj;
       }
     }
     for (let i = 0; i < 3; i++) {
-      if (arr[i] == arr[i + 3] && arr[i] == arr[i + 6] && arr[i] != "") {
-        return player;
+      if (
+        someBoard[i] == someBoard[i + 3] &&
+        someBoard[i] == someBoard[i + 6] &&
+        someBoard[i] != ""
+      ) {
+        if (someBoard[i] == "x") return player1obj;
+        else return player2obj;
       }
     }
     for (let i = 0; i < 9; i++) {
-      if (arr[i] == "") return false;
+      if (someBoard[i] == "") return false;
     }
     return "tie";
   }
@@ -113,55 +133,53 @@ const GameBoard = function (player1obj, player2obj) {
       }
     }
   }
-  function _unbeatable(newBoard, player) {
-    if (
-      !Object.values(players[0]).includes("unbeatable") &&
-      !Object.values(players[1]).includes("unbeatable")
-    )
-      return;
-    const avalSpots = [];
-    for (let i = 0; i < newBoard.length; i++) {
-      if (newBoard[i] == "") avalSpots.push(i);
-    }
-    if (_checkResult(newBoard, player) != false) {
-      if (_checkResult(newBoard, player) === "tie") return { score: 0 };
-      else if (_checkResult(newBoard, player).playerName == "unbeatable")
-        return { score: 10 };
-      else return { score: -10 };
-    }
-    let moves = [];
-    for (let i = 0; i < avalSpots.length; i++) {
-      let move = {};
-      move.index = avalSpots[i];
-      newBoard[avalSpots[i]] = player.value;
-      if (player == players[0]) {
-        move.score = _unbeatable(newBoard, players[1]).score;
-      } else {
-        move.score = _unbeatable(newBoard, players[0]).score;
-      }
-      newBoard[avalSpots[i]] = "";
-      moves.push(move);
-    }
-    let bestMove = 0;
-    if (player.playerName == "unbeatable") {
-      let bestScore = -1000;
-      for (let i = 0; i < moves.length; i++) {
-        if (moves[i].score > bestScore) {
-          bestScore = moves[i].score;
-          bestMove = i;
-        }
-      }
-    } else {
-      let bestScore = 1000;
-      for (let i = 0; i < moves.length; i++) {
-        if (moves[i].score < bestScore) {
-          bestScore = moves[i].score;
+
+
+  function _unbeatable(someBoard) {
+    let bestScore = -Infinity;
+    let bestMove;
+    for (let i = 0; i < someBoard.length; i++) {
+      if (someBoard[i] == "") {
+        someBoard[i] = players[1].value;
+        let score = minimax(someBoard, 0, false);
+        someBoard[i] = "";
+        if (score > bestScore) {
+          bestScore = score;
           bestMove = i;
         }
       }
     }
-    console.log(moves[bestMove].index);
-    return moves[bestMove].index;
+
+    return bestMove;
+  }
+
+  let scores = { x: -1, o: 1, tie: 0 };
+
+  function minimax(someBoard, depth, isMaximizing) {
+    let result = _checkResult(someBoard);
+    if (result != false) {
+      let score = scores[result.value];
+      return score;
+    }
+    if (isMaximizing) {
+      let bestScore = -Infinity;
+      let bestMove;
+      for (let i = 0; i < someBoard.length; i++) {
+        if (someBoard[i] == "") {
+          someBoard[i] = players[1].value;
+          let score = minimax(someBoard, depth + 1, false);
+          someBoard[i] = "";
+          if (score > bestScore) {
+            bestScore = score;
+            bestMove = i;
+          }
+        }
+      }
+
+      return bestMove;
+    }
+
+    return 1;
   }
   _displayBoard();
 
