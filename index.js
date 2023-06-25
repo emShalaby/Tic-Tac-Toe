@@ -110,10 +110,21 @@ const GameBoard = function () {
 
 const Origin = function () {
   const newGameBtn = document.querySelector(".new-game");
+  const closeModalBtn = document.querySelector("#close");
+  const modal = document.querySelector("#modal");
+
   newGameBtn.addEventListener("click", () => {
     let game = GameBoard();
     newGameBtn.remove();
     this.game = game;
   });
+  closeModalBtn.addEventListener(
+    "click",
+    () => {
+      modal.close();
+      Origin();
+    },
+    { once: true }
+  );
 };
 Origin();
