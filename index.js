@@ -174,5 +174,12 @@ const Origin = function () {
     );
     buttonContainer.remove();
   });
+  unbeatableBtn.addEventListener("click", () => {
+    GameBoard(
+      { playerName: "player1", value: "x" },
+      { playerName: "unbeatable", value: "o" }
+    );
+    buttonContainer.remove();
+  });
 };
 Origin();
