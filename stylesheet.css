@@ -37,8 +37,11 @@
 .cards-container{
   display: flex;
   text-align: center;
+  gap: 1em;
+  padding: 1em;
   
 }
 .card{
   border: solid 3px black ;
+  padding: 1em;
 }
