@@ -109,7 +109,7 @@ const GameBoard = function () {
     if (winner === false) return;
     const modal = document.querySelector("#modal");
     const msg = document.createElement("p");
-    modal.appendChild(msg);
+    modal.prepend(msg);
     modal.showModal();
     if (winner.length) {
       msg.innerText = "TIE !";
