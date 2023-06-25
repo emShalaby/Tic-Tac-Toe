@@ -1,14 +1,11 @@
-const GameBoard = function () {
+const GameBoard = function (player1obj, player2obj) {
   const board = [];
 
   for (let i = 0; i < 9; i++) {
     board[i] = "";
   }
 
-  let players = [
-    { playerName: "player1", value: "x" },
-    { playerName: "player2", value: "o" },
-  ];
+  let players = [player1obj, player2obj];
 
   let activePlayer = players[0];
   let turnCount = 0;
@@ -134,7 +131,10 @@ const Origin = function () {
   body.appendChild(newGameBtn);
 
   newGameBtn.addEventListener("click", () => {
-    GameBoard();
+    GameBoard(
+      { playerName: "player1", value: "x" },
+      { playerName: "player2", value: "o" }
+    );
     newGameBtn.remove();
   });
   closeModalBtn.addEventListener(
