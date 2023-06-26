@@ -43,7 +43,7 @@ const GameBoard = function (player1obj, player2obj) {
       document.querySelector(".board").remove();
     }
 
-    const body = document.querySelector("body");
+    const boardContainer=document.querySelector('.board-container')
     const boardDiv = document.createElement("div");
     const colBorder1 = document.createElement("div");
     const colBorder2 = document.createElement("div");
@@ -56,7 +56,7 @@ const GameBoard = function (player1obj, player2obj) {
     rowBorder1.classList.add("row-border1");
     rowBorder2.classList.add("row-border2");
 
-    body.appendChild(boardDiv);
+    boardContainer.appendChild(boardDiv);
     boardDiv.append(colBorder1);
     boardDiv.append(colBorder2);
     boardDiv.append(rowBorder1);
