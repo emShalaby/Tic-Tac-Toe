@@ -217,11 +217,18 @@ const Origin = function () {
   const player1Card = document.querySelector("#player1");
   const player2Card = document.querySelector("#player2");
   const body = document.querySelector("body");
+  const header = document.querySelector(".header");
   cardsContainer.style.display = "flex";
+  header.style.display = "flex";
   function _collectNames() {
     const name1 = document.querySelector("#player1-name").value;
     const name2 = document.querySelector("#player2-name").value;
     return [name1, name2];
+  }
+  function _hideBackground() {
+    cardsContainer.style.display = "none";
+    buttonContainer.remove();
+    header.style.display = "none";
   }
 
   vsCpuBtn.innerText = "VS CPU";
@@ -235,12 +242,11 @@ const Origin = function () {
 
   newGameBtn.addEventListener("click", () => {
     let names = _collectNames();
-    cardsContainer.style.display = "none";
+    _hideBackground();
     GameBoard(
       { playerName: names[0], value: "x" },
       { playerName: names[1], value: "o" }
     );
-    buttonContainer.remove();
   });
   closeModalBtn.addEventListener(
     "click",
@@ -252,8 +258,8 @@ const Origin = function () {
   );
   vsCpuBtn.addEventListener("click", () => {
     let names = _collectNames();
+    _hideBackground();
 
-    cardsContainer.style.display = "none";
     if (player1Card.classList.contains("on")) {
       GameBoard(
         { playerName: names[0], value: "x" },
@@ -264,11 +270,10 @@ const Origin = function () {
         { playerName: "CPU", value: "x", systemEntity: "CPU" },
         { playerName: names[1], value: "o" }
       );
-    buttonContainer.remove();
   });
   unbeatableBtn.addEventListener("click", () => {
-    cardsContainer.style.display = "none";
     let names = _collectNames();
+    _hideBackground();
     if (player1Card.classList.contains("on")) {
       GameBoard(
         { playerName: names[0], value: "x" },
@@ -279,7 +284,6 @@ const Origin = function () {
         { playerName: names[1], value: "o" },
         { playerName: "unbeatable", value: "x", systemEntity: "unbeatable" }
       );
-    buttonContainer.remove();
   });
   player1Card.addEventListener("click", () => {
     if (player2Card.classList.contains("on")) {
