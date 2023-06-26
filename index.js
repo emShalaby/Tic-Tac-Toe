@@ -16,7 +16,7 @@ const GameBoard = function (player1obj, player2obj) {
   if (activePlayer.systemEntity == "CPU") {
     _easyCPU();
   }
-  if (activePlayer.systemEntity == "unbeatable") {
+  if (activePlayer.systemEntity == "UNBEATABLE") {
     let move = _unbeatable(board);
     updateBoard(move);
   }
@@ -24,16 +24,17 @@ const GameBoard = function (player1obj, player2obj) {
   function updateBoard(cell) {
     if (board[cell] != "") return;
     board[cell] = activePlayer.value;
-    _displayBoard();
-    _displayResult(_checkResult(board));
-    if (_checkResult(board)) return activePlayer;
+
     if (activePlayer == player1obj) activePlayer = player2obj;
     else if (activePlayer == player2obj) activePlayer = player1obj;
+    _displayBoard();
+    _displayResult(_checkResult(board));
+    if (_checkResult(board)) return;
 
     if (activePlayer.systemEntity == "CPU") {
       _easyCPU();
     }
-    if (activePlayer.systemEntity == "unbeatable") {
+    if (activePlayer.systemEntity == "UNBEATABLE") {
       let move = _unbeatable(board);
       updateBoard(move);
     }
@@ -42,7 +43,7 @@ const GameBoard = function (player1obj, player2obj) {
     if (document.querySelector(".board")) {
       document.querySelector(".board").remove();
     }
-
+    _showActivePlayer();
     const boardContainer = document.querySelector(".board-container");
     const boardDiv = document.createElement("div");
     const colBorder1 = document.createElement("div");
@@ -199,6 +200,21 @@ const GameBoard = function (player1obj, player2obj) {
       return bestScore;
     }
   }
+
+  function _showActivePlayer() {
+    if (document.querySelector(".active-player"))
+      document.querySelector(".active-player").remove();
+    let activePlayerDiv = document.createElement("div");
+    let body = document.querySelector("body");
+    let h2 = document.createElement("h2");
+    let p = document.createElement("p");
+    h2.innerText = activePlayer.playerName;
+    p.innerText = "to move";
+    activePlayerDiv.classList.add("active-player");
+    body.prepend(activePlayerDiv);
+    activePlayerDiv.append(h2);
+    activePlayerDiv.append(p);
+  }
   _displayBoard();
   return { updateBoard };
 };
@@ -218,6 +234,8 @@ const Origin = function () {
   const player2Card = document.querySelector("#player2");
   const body = document.querySelector("body");
   const header = document.querySelector(".header");
+  const activePlayerDiv = document.querySelector(".active-player");
+  if (activePlayerDiv) activePlayerDiv.remove();
   cardsContainer.style.display = "flex";
   header.style.display = "flex";
   function _collectNames() {
@@ -277,12 +295,12 @@ const Origin = function () {
     if (player1Card.classList.contains("on")) {
       GameBoard(
         { playerName: names[0], value: "x" },
-        { playerName: "unbeatable", value: "o", systemEntity: "unbeatable" }
+        { playerName: "UNBEATABLE", value: "o", systemEntity: "UNBEATABLE" }
       );
     } else
       GameBoard(
         { playerName: names[1], value: "o" },
-        { playerName: "unbeatable", value: "x", systemEntity: "unbeatable" }
+        { playerName: "UNBEATABLE", value: "x", systemEntity: "UNBEATABLE" }
       );
   });
   player1Card.addEventListener("click", () => {

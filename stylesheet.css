@@ -141,3 +141,8 @@ label {
 .on >h2{
   color: rgb(136, 5, 70);
 }
+
+.active-player{
+  text-align: center;
+  padding: 1em;
+}
