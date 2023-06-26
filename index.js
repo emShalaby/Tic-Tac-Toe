@@ -202,6 +202,8 @@ const Origin = function () {
   const unbeatableBtn = document.createElement("button");
   const buttonContainer = document.createElement("div");
   const cardsContainer = document.querySelector(".cards-container");
+  const player1Card = document.querySelector("#player1");
+  const player2Card = document.querySelector("#player2");
   cardsContainer.style.display = "flex";
   function _collectNames() {
     const name1 = document.querySelector("#player1-name").value;
@@ -248,6 +250,19 @@ const Origin = function () {
       { playerName: "unbeatable", value: "o" }
     );
     buttonContainer.remove();
+  });
+  player1Card.addEventListener("click", () => {
+    if (player2Card.classList.contains("on")) {
+      player1Card.classList.toggle("on");
+      player2Card.classList.toggle("on");
+
+    }
+  });
+  player2Card.addEventListener("click", () => {
+    if (player1Card.classList.contains("on")) {
+      player2Card.classList.toggle("on");
+      player1Card.classList.toggle("on");
+    }
   });
 };
 Origin();
