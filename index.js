@@ -214,6 +214,7 @@ const Origin = function () {
   const cardsContainer = document.querySelector(".cards-container");
   const player1Card = document.querySelector("#player1");
   const player2Card = document.querySelector("#player2");
+  const body = document.querySelector("body");
   cardsContainer.style.display = "flex";
   function _collectNames() {
     const name1 = document.querySelector("#player1-name").value;
@@ -228,7 +229,7 @@ const Origin = function () {
   buttonContainer.appendChild(newGameBtn);
   buttonContainer.appendChild(vsCpuBtn);
   buttonContainer.appendChild(unbeatableBtn);
-  boardContainer.appendChild(buttonContainer);
+  body.appendChild(buttonContainer);
 
   newGameBtn.addEventListener("click", () => {
     let names = _collectNames();
