@@ -43,7 +43,7 @@ const GameBoard = function (player1obj, player2obj) {
       document.querySelector(".board").remove();
     }
 
-    const boardContainer=document.querySelector('.board-container')
+    const boardContainer = document.querySelector(".board-container");
     const boardDiv = document.createElement("div");
     const colBorder1 = document.createElement("div");
     const colBorder2 = document.createElement("div");
@@ -250,6 +250,7 @@ const Origin = function () {
   );
   vsCpuBtn.addEventListener("click", () => {
     let names = _collectNames();
+    cardsContainer.style.display = "none";
     if (player1Card.classList.contains("on")) {
       GameBoard(
         { playerName: names[0], value: "x" },
@@ -263,6 +264,7 @@ const Origin = function () {
     buttonContainer.remove();
   });
   unbeatableBtn.addEventListener("click", () => {
+    cardsContainer.style.display = "none";
     let names = _collectNames();
     if (player1Card.classList.contains("on")) {
       GameBoard(
