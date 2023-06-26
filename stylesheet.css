@@ -57,7 +57,7 @@ button{
   padding: 1em;
 }
 .on{
-  background-color: yellowgreen;
+  background-color: #FFC700;
 }
 .header{
   display: flex;
