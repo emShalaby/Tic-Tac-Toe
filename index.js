@@ -3,6 +3,7 @@ const GameBoard = function (player1obj, player2obj) {
   let sym1 = player1obj.value;
   let sym2 = player2obj.value;
   let scores = { [sym1]: -1, [sym2]: 1, tie: 0 };
+
   //{o:-1 x:1 tie:0}
 
   for (let i = 0; i < 9; i++) {
@@ -83,7 +84,7 @@ const GameBoard = function (player1obj, player2obj) {
       someBoard[0] == someBoard[8] &&
       someBoard[0] != ""
     ) {
-      if (someBoard[0] == "x") return player1obj;
+      if (someBoard[0] == sym1) return player1obj;
       else return player2obj;
     }
     if (
@@ -91,7 +92,7 @@ const GameBoard = function (player1obj, player2obj) {
       someBoard[2] == someBoard[6] &&
       someBoard[2] != ""
     ) {
-      if (someBoard[2] == "x") return player1obj;
+      if (someBoard[2] == sym1) return player1obj;
       else return player2obj;
     }
 
@@ -101,7 +102,7 @@ const GameBoard = function (player1obj, player2obj) {
         someBoard[i] == someBoard[i + 2] &&
         someBoard[i] != ""
       ) {
-        if (someBoard[i] == "x") return player1obj;
+        if (someBoard[i] == sym1) return player1obj;
         else return player2obj;
       }
     }
@@ -111,7 +112,7 @@ const GameBoard = function (player1obj, player2obj) {
         someBoard[i] == someBoard[i + 6] &&
         someBoard[i] != ""
       ) {
-        if (someBoard[i] == "x") return player1obj;
+        if (someBoard[i] == sym1) return player1obj;
         else return player2obj;
       }
     }
@@ -197,7 +198,6 @@ const GameBoard = function (player1obj, player2obj) {
     }
   }
   _displayBoard();
-  this.board = board;
   return { updateBoard };
 };
 
