@@ -70,3 +70,8 @@ button{
   gap: 1em;
   align-items: center;
 }
+#modal{
+  margin: auto;
+  padding: 1em;
+  text-align: center;
+}
