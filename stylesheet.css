@@ -25,6 +25,9 @@ button{
   width: 12em;
   
 }
+button:hover{
+  cursor: pointer;
+}
 input{
   padding: .5em;
   margin-bottom: 1em;
@@ -37,7 +40,7 @@ label{
   display: grid;
   grid-template-columns: 1fr auto 1fr auto 1fr;
   grid-template-rows: 1fr auto  1fr auto  1fr;
-  min-height: 200px;
+  min-height: 300px;
   max-width: 500px;
   margin-left: auto;
   margin-right: auto;
@@ -49,6 +52,13 @@ label{
   display: flex;
   align-items: center;
   justify-content: center;
+  border: solid 2px hotpink;
+}
+.cell:hover{
+  background-color: rgba(0, 0, 0,.5);
+}
+.cell>h1{
+  color: black;
 }
 .col-border1{
     background-color: black;
@@ -86,10 +96,15 @@ label{
 }
 .card{
   padding: 2em;
-  background-color: #475569;
+  background-color: #a3a3a3;
   display: flex;
+  flex: 1;
+  max-width: 300px;
   
   flex-direction: column;
+}
+.card:hover{
+  cursor: pointer;
 }
 
 .on{
@@ -120,4 +135,8 @@ label{
 }
 #x,#o{
 margin: auto;
+}
+.cell:hover{
+  cursor: pointer;
+  
 }

@@ -64,11 +64,13 @@ const GameBoard = function (player1obj, player2obj) {
 
     for (let i = 0; i < 9; i++) {
       let cell = document.createElement("div");
-      let value = document.createElement("p");
+      let value = document.createElement("h1");
       cell.appendChild(value);
       cell.classList.add("cell");
       boardDiv.appendChild(cell);
       value.innerText = board[i];
+      if (board[i] == "x") value.style.color = "black";
+      else value.style.color = "#fb923c";
       cell.addEventListener(
         "click",
         () => {
