@@ -9,6 +9,13 @@ const GameBoard = function (player1obj, player2obj) {
 
   let activePlayer = players[0];
   let turnCount = 0;
+  if (activePlayer.playerName == "CPU") {
+    _easyCPU();
+  }
+  if (activePlayer.playerName == "unbeatable") {
+    let move = _unbeatable(board);
+    updateBoard(move);
+  }
 
   function updateBoard(cell) {
     if (board[cell] != "") return;
@@ -238,10 +245,17 @@ const Origin = function () {
     { once: true }
   );
   vsCpuBtn.addEventListener("click", () => {
-    GameBoard(
-      { playerName: "player1", value: "x" },
-      { playerName: "CPU", value: "o" }
-    );
+    let names = _collectNames();
+    if (player1Card.classList.contains("on")) {
+      GameBoard(
+        { playerName: names[0], value: "x" },
+        { playerName: "CPU", value: "o" }
+      );
+    } else
+      GameBoard(
+        { playerName: "CPU", value: "x" },
+        { playerName: names[1], value: "o" }
+      );
     buttonContainer.remove();
   });
   unbeatableBtn.addEventListener("click", () => {
@@ -255,7 +269,6 @@ const Origin = function () {
     if (player2Card.classList.contains("on")) {
       player1Card.classList.toggle("on");
       player2Card.classList.toggle("on");
-
     }
   });
   player2Card.addEventListener("click", () => {
