@@ -1,5 +1,9 @@
 const GameBoard = function (player1obj, player2obj) {
   let board = [];
+  let sym1 = player1obj.value;
+  let sym2 = player2obj.value;
+  let scores = { [sym1]: -1, [sym2]: 1, tie: 0 };
+  //{o:-1 x:1 tie:0}
 
   for (let i = 0; i < 9; i++) {
     board[i] = "";
@@ -7,8 +11,7 @@ const GameBoard = function (player1obj, player2obj) {
 
   let players = [player1obj, player2obj];
 
-  let activePlayer = players[0];
-  let turnCount = 0;
+  let activePlayer = player1obj.value == "x" ? player1obj : player2obj;
   if (activePlayer.playerName == "CPU") {
     _easyCPU();
   }
@@ -23,8 +26,9 @@ const GameBoard = function (player1obj, player2obj) {
     _displayBoard();
     _displayResult(_checkResult(board));
     if (_checkResult(board)) return activePlayer;
-    turnCount++;
-    activePlayer = players[turnCount % 2];
+    if (activePlayer == player1obj) activePlayer = player2obj;
+    else if (activePlayer == player2obj) activePlayer = player1obj;
+
     if (activePlayer.playerName == "CPU") {
       _easyCPU();
     }
@@ -141,7 +145,6 @@ const GameBoard = function (player1obj, player2obj) {
       }
     }
   }
-  let scores = { x: -1, o: 1, tie: 0 };
 
   function _unbeatable(someBoard) {
     let bestMove;
@@ -259,10 +262,17 @@ const Origin = function () {
     buttonContainer.remove();
   });
   unbeatableBtn.addEventListener("click", () => {
-    GameBoard(
-      { playerName: "player1", value: "x" },
-      { playerName: "unbeatable", value: "o" }
-    );
+    let names = _collectNames();
+    if (player1Card.classList.contains("on")) {
+      GameBoard(
+        { playerName: names[0], value: "x" },
+        { playerName: "unbeatable", value: "o" }
+      );
+    } else
+      GameBoard(
+        { playerName: names[1], value: "o" },
+        { playerName: "unbeatable", value: "x" }
+      );
     buttonContainer.remove();
   });
   player1Card.addEventListener("click", () => {
