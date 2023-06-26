@@ -126,7 +126,18 @@ const GameBoard = function (player1obj, player2obj) {
   }
   function _displayResult(winner) {
     if (winner === false) return false;
-
+    let winCombo = _showWinCombo(board);
+    console.log(winCombo);
+    const cells = document.querySelectorAll(".cell");
+    if (winCombo != board) {
+      for (let i = 0; i < 3; i++) {
+        cells[winCombo[i]].style.backgroundColor = "green";
+      }
+    } else {
+      for (let i = 0; i < 9; i++) {
+        cells[i].style.backgroundColor = "red";
+      }
+    }
     const modal = document.querySelector("#modal");
     if (modal.firstChild) modal.firstChild.remove();
     const msg = document.createElement("p");
@@ -215,6 +226,43 @@ const GameBoard = function (player1obj, player2obj) {
     activePlayerDiv.append(h2);
     activePlayerDiv.append(p);
   }
+  function _showWinCombo(someBoard) {
+    if (
+      someBoard[0] == someBoard[4] &&
+      someBoard[0] == someBoard[8] &&
+      someBoard[0] != ""
+    ) {
+      return [0, 4, 8];
+    }
+    if (
+      someBoard[2] == someBoard[4] &&
+      someBoard[2] == someBoard[6] &&
+      someBoard[2] != ""
+    ) {
+      return [2, 4, 6];
+    }
+
+    for (let i = 0; i < 9; i = i + 3) {
+      if (
+        someBoard[i] == someBoard[i + 1] &&
+        someBoard[i] == someBoard[i + 2] &&
+        someBoard[i] != ""
+      ) {
+        return [i, i + 1, i + 2];
+      }
+    }
+    for (let i = 0; i < 3; i++) {
+      if (
+        someBoard[i] == someBoard[i + 3] &&
+        someBoard[i] == someBoard[i + 6] &&
+        someBoard[i] != ""
+      ) {
+        return [i, i + 3, i + 6];
+      }
+    }
+    return someBoard;
+  }
+
   _displayBoard();
   return { updateBoard };
 };
