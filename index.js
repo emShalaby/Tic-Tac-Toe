@@ -13,10 +13,10 @@ const GameBoard = function (player1obj, player2obj) {
   let players = [player1obj, player2obj];
 
   let activePlayer = player1obj.value == "x" ? player1obj : player2obj;
-  if (activePlayer.playerName == "CPU") {
+  if (activePlayer.systemEntity == "CPU") {
     _easyCPU();
   }
-  if (activePlayer.playerName == "unbeatable") {
+  if (activePlayer.systemEntity == "unbeatable") {
     let move = _unbeatable(board);
     updateBoard(move);
   }
@@ -30,10 +30,10 @@ const GameBoard = function (player1obj, player2obj) {
     if (activePlayer == player1obj) activePlayer = player2obj;
     else if (activePlayer == player2obj) activePlayer = player1obj;
 
-    if (activePlayer.playerName == "CPU") {
+    if (activePlayer.systemEntity == "CPU") {
       _easyCPU();
     }
-    if (activePlayer.playerName == "unbeatable") {
+    if (activePlayer.systemEntity == "unbeatable") {
       let move = _unbeatable(board);
       updateBoard(move);
     }
@@ -250,15 +250,16 @@ const Origin = function () {
   );
   vsCpuBtn.addEventListener("click", () => {
     let names = _collectNames();
+
     cardsContainer.style.display = "none";
     if (player1Card.classList.contains("on")) {
       GameBoard(
         { playerName: names[0], value: "x" },
-        { playerName: "CPU", value: "o" }
+        { playerName: "CPU", value: "o", systemEntity: "CPU" }
       );
     } else
       GameBoard(
-        { playerName: "CPU", value: "x" },
+        { playerName: "CPU", value: "x", systemEntity: "CPU" },
         { playerName: names[1], value: "o" }
       );
     buttonContainer.remove();
@@ -269,12 +270,12 @@ const Origin = function () {
     if (player1Card.classList.contains("on")) {
       GameBoard(
         { playerName: names[0], value: "x" },
-        { playerName: "unbeatable", value: "o" }
+        { playerName: "unbeatable", value: "o", systemEntity: "unbeatable" }
       );
     } else
       GameBoard(
         { playerName: names[1], value: "o" },
-        { playerName: "unbeatable", value: "x" }
+        { playerName: "unbeatable", value: "x", systemEntity: "unbeatable" }
       );
     buttonContainer.remove();
   });
